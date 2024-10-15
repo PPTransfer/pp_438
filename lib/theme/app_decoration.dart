@@ -9,7 +9,7 @@ class AppDecoration {
 //         color: appTheme.gray900,
 //         image: DecorationImage(
 //           image: AssetImage(Assets.images.backgroundMain.path),
-//           fit: BoxFit.fill,
+//           fit: BoxFit.cover,
 //
 //         ),
 //       );

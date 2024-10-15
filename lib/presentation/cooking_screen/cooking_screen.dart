@@ -51,7 +51,7 @@ class _CookingScreenState extends State<CookingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: BackgroundWidget(
         
         child: PageView.builder(
           itemCount: widget.recipe.steps.length,
@@ -122,10 +122,13 @@ class _CookingScreenState extends State<CookingScreen>
                   SizedBox(width: 16.h),
                   Expanded(
                     child: Text('${widget.recipe.name}',
+                        maxLines: 1,
+
                         style: CustomTextStyles.displayMediumOnPrimary_1),
                   ),
                   SizedBox(width: 16.h),
                   InkWell(
+                    onTap: ()=> context.pushRoute(MainRoute()),
                     child: CustomImageView(imagePath: Assets.images.homeButton),
                   )
                 ],
@@ -148,90 +151,93 @@ class _CookingScreenState extends State<CookingScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Column(
-                  children: [
-                    if (step.photo.isNotEmpty)
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 50.h,
-                        ),
-                        // EdgeInsets.all(16.0),
-                        child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: Container(
-                            decoration: AppDecoration.fillGray,
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Container(
-                                  child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadiusStyle.roundedBorder30,
-                                    // Используйте 20.0 вместо 20.h, если не используете библиотеку для адаптивных размеров
-                                    child: FutureBuilder<Uint8List>(
-                                      future: Future.value(
-                                          ImageHelper.convertBase64ToFile(
-                                              step.photo)),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                                ConnectionState.done &&
-                                            snapshot.hasData) {
-                                          return ClipRRect(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder30,
-                                            child: Image.memory(
-                                              snapshot.data!,
-                                              fit: BoxFit.fill,
-                                            ),
-                                          );
-                                        } else {
-                                          return Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(500),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: AppDecoration.primary
-                                                  .copyWith(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              500),
-                                                      color: appTheme.black900),
-                                              child: CustomImageView(
-                                                imagePath: Assets.images.trash,
-                                              )),
-                                        ],
+                Expanded(
+                  child: Column(
+                    children: [
+                      if (step.photo.isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 50.h,
+                          ),
+                          // EdgeInsets.all(16.0),
+                          child: AspectRatio(
+                            aspectRatio: 1.0,
+                            child: Container(
+                              decoration: AppDecoration.fillGray,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Container(
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadiusStyle.roundedBorder30,
+                                      // Используйте 20.0 вместо 20.h, если не используете библиотеку для адаптивных размеров
+                                      child: FutureBuilder<Uint8List>(
+                                        future: Future.value(
+                                            ImageHelper.convertBase64ToFile(
+                                                step.photo)),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            return ClipRRect(
+                                              borderRadius: BorderRadiusStyle
+                                                  .roundedBorder30,
+                                              child: Image.memory(
+                                                snapshot.data!,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            );
+                                          } else {
+                                            return Center(
+                                              child: CircularProgressIndicator(),
+                                            );
+                                          }
+                                        },
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  // Container(
+                                  //   child: InkWell(
+                                  //     borderRadius: BorderRadius.circular(500),
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.all(8.0),
+                                  //       child: Column(
+                                  //         crossAxisAlignment:
+                                  //             CrossAxisAlignment.end,
+                                  //         children: [
+                                  //           Container(
+                                  //               height: 50,
+                                  //               width: 50,
+                                  //               decoration: AppDecoration.primary
+                                  //                   .copyWith(
+                                  //                       borderRadius:
+                                  //                           BorderRadius.circular(
+                                  //                               500),
+                                  //                       color: appTheme.black900),
+                                  //               child: CustomImageView(
+                                  //                 imagePath: Assets.images.trash,
+                                  //               )),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.h),
+                        child: Text(
+                          step.name,
+                          style: theme.textTheme.displaySmall,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.h),
-                      child: Text(
-                        step.name,
-                        style: theme.textTheme.displaySmall,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 InkWell(
                   onTap: () => context.pushRoute(

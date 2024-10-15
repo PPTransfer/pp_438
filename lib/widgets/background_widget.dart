@@ -14,7 +14,7 @@ class BackgroundWidget extends StatelessWidget {
       children: [
         CustomImageView(
           imagePath: Assets.images.backgroundMain.path,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
         child,
       ],

@@ -117,7 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     horizontal: 80.h,
                   ),
                   child: CustomElevatedButton(
-                    text: _currentPage == 2 ? 'Start' : 'Next',
+                    text: _currentPage == 2 ? 'Go!' : 'Next',
                     buttonStyle: CustomButtonStyles.fillRed,
                     onPressed: () => _next(),
                   ),
@@ -175,9 +175,10 @@ class OnboardingPage extends StatelessWidget {
         // fit: StackFit.expand,
         children: [
           SizedBox(height: 20.h),
-          Expanded(
+          Flexible(
             child: Container(
-              // height: 403.h,
+              //width: double.maxFinite,
+              height: 403.h,
               //  padding: EdgeInsets.only(bottom: 80.h),
               child: CustomImageView(
                 // height: 350.h,
@@ -187,6 +188,7 @@ class OnboardingPage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 16.h),
           Container(
             // height: 250.h,
 

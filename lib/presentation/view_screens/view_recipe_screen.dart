@@ -132,7 +132,7 @@ class _ViewRecipeScreenState extends State<ViewRecipeScreen>
                                                               .roundedBorder30,
                                                       child: Image.memory(
                                                         snapshot.data!,
-                                                        fit: BoxFit.fill,
+                                                        fit: BoxFit.cover,
                                                       ),
                                                     );
                                                   } else {
@@ -267,7 +267,7 @@ class _ViewRecipeScreenState extends State<ViewRecipeScreen>
                                   Row(
                                     children: [
                                       Text(
-                                        '${widget.recipe.ingredients.length}',
+                                        '${_recipeIngredients.length}',
                                         style: theme.textTheme.displaySmall,
                                       ),
                                       Text(
@@ -387,6 +387,7 @@ class _ViewRecipeScreenState extends State<ViewRecipeScreen>
                 padding: EdgeInsets.only(bottom: 8.h),
                 child: StepWidget(
                   step: widget.recipe.steps[index],
+                  index: index+1,
                 ),
               );
             },

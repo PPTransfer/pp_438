@@ -5,8 +5,9 @@ import '../../../data/models/ingredient_model/ingredient.dart';
 
 class IngredientWidget extends StatelessWidget {
   final Ingredient ingredient;
+  final bool showCount;
 
-  const IngredientWidget({super.key, required this.ingredient});
+  const IngredientWidget({super.key, required this.ingredient, this.showCount= true});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,9 @@ class IngredientWidget extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
+                        if(showCount)
                         Text(
-                          '${ingredient.amount} ${ingredient.unit.name}',
+                          ingredient.parseAmount(),
                           style: theme.textTheme.bodyLarge,
                         ),
                        // Spacer(),

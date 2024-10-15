@@ -35,7 +35,13 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    _amountController.text = widget.ingredient.amount.toString();
+    _amountAddController.text = widget.ingredient.amountAdd.toString();
+    _selectedUnit = widget.ingredient.unit;
+    super.initState();
+    setState(() {
+
+    });
   }
 
   @override
@@ -309,7 +315,7 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
   }
 
   bool _isFieldsFill() {
-    return _amountAddController.text.isNotEmpty ||
+    return _amountController.text.isNotEmpty ||
         _amountAddController.text.isNotEmpty;
   }
 
@@ -321,6 +327,6 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
     );
 
     await  DatabaseService.saveIngredient(ingredient);
-    context.maybePop();
+    context.maybePop(ingredient.id);
   }
 }

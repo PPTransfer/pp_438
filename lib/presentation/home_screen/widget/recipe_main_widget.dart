@@ -7,10 +7,11 @@ import 'package:pp_438/data/models/recipe_model/recipe.dart';
 
 class RecipeMainWidget extends StatefulWidget {
   final Recipe recipe;
-  final Function() onDelete;
+  final Function() onTap;
+
 
   const RecipeMainWidget(
-      {super.key, required this.recipe, required this.onDelete});
+      {super.key, required this.recipe, required this.onTap});
 
   @override
   State<RecipeMainWidget> createState() => _RecipeMainWidgetState();
@@ -31,7 +32,7 @@ class _RecipeMainWidgetState extends State<RecipeMainWidget> {
               ? DecorationImage(
                   image: MemoryImage(
                       ImageHelper.convertBase64ToFile(widget.recipe.photo!)),
-                  fit: BoxFit.fill)
+                  fit: BoxFit.cover)
               : null,
         ),
         padding: EdgeInsets.all(10.h),
@@ -45,9 +46,12 @@ class _RecipeMainWidgetState extends State<RecipeMainWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.recipe.name,
-                    style: theme.textTheme.displaySmall,
+                  Flexible(
+                    child: Text(
+                      widget.recipe.name,
+                      style: theme.textTheme.displaySmall,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   SizedBox(
                     width: 8.h,
@@ -125,11 +129,17 @@ class _RecipeMainWidgetState extends State<RecipeMainWidget> {
                       ),
                     ],
                   ),
-                  CustomImageView(
-                    height: 25.h,
-                    imagePath: widget.recipe.isFavorite
-                        ? Assets.images.favoriteFill
-                        : Assets.images.favoriteEmpty,
+                  InkWell(
+                    onTap: () {
+                      widget.recipe.isFavorite = !widget.recipe.isFavorite;
+                      widget.onTap?.call();
+                    },
+                    child: CustomImageView(
+                      height: 25.h,
+                      imagePath: widget.recipe.isFavorite
+                          ? Assets.images.favoriteFill
+                          : Assets.images.favoriteEmpty,
+                    ),
                   ),
                 ],
               ),
@@ -145,7 +155,7 @@ class _RecipeMainWidgetState extends State<RecipeMainWidget> {
                   child: Text(
                     widget.recipe.description,
                     style: theme.textTheme.bodySmall,
-                    maxLines: 5,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

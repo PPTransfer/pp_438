@@ -24,27 +24,27 @@ Future<void> main() async {
   Future.wait([
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
   ]).then((value) {
-    PrefUtils().init();
+
     runApp(MyApp());
   });
 }
 
 Future<void> _initApp() async {
-  try {
-    await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
-    );
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
-  } on Exception catch (e) {
-    log("Failed to initialize Firebase: $e");
-  }
-
+  // try {
+  //   await Firebase.initializeApp(
+  //     // options: DefaultFirebaseOptions.currentPlatform,
+  //   );
+  //   FlutterError.onError = (errorDetails) {
+  //     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  //   };
+  //   PlatformDispatcher.instance.onError = (error, stack) {
+  //     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+  //     return true;
+  //   };
+  // } on Exception catch (e) {
+  //   log("Failed to initialize Firebase: $e");
+  // }
+  await PrefUtils().init();
   await ServiceLocator.setup();
 }
 

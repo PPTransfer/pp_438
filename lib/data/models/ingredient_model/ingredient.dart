@@ -61,4 +61,41 @@ class Ingredient extends HiveObject {
       icon: icon ?? this.icon,
     );
   }
+
+  String parseAmount() {
+    switch (unit) {
+      case Unit.kgg:
+        return _parseKgg();
+      case Unit.lboz:
+        return _parseLbOz();
+      case Unit.pcs:
+        return _parsePcs();
+      default:
+        return '';
+    }
+  }
+
+  /// Helper method to parse kilograms and grams
+  String _parseKgg() {
+    if (amount == 0 && amountAdd == 0) return '';
+
+    final kgPart = amount > 0 ? '$amount kg' : '';
+    final gPart = amountAdd > 0 ? '$amountAdd g' : '';
+    return [kgPart, gPart].where((part) => part.isNotEmpty).join(' ');
+  }
+
+  /// Helper method to parse pounds and ounces
+  String _parseLbOz() {
+    if (amount == 0 && amountAdd == 0) return '';
+
+    final lbPart = amount > 0 ? '$amount lb' : '';
+    final ozPart = amountAdd > 0 ? '$amountAdd oz' : '';
+    return [lbPart, ozPart].where((part) => part.isNotEmpty).join(' ');
+  }
+
+  /// Helper method to parse pieces
+  String _parsePcs() {
+    return amount > 0 ? '$amount pieces' : '';
+  }
+
 }

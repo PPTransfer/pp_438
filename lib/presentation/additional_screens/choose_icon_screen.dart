@@ -97,9 +97,9 @@ class _ChooseIconScreenState extends State<ChooseIconScreen> {
                     child: Text('Icons', style: theme.textTheme.displayLarge),
                   ),
                   SizedBox(width: 16.h),
-                  InkWell(
-                    child: CustomImageView(imagePath: Assets.images.addButton),
-                  ),
+                  // InkWell(
+                  //   child: CustomImageView(imagePath: Assets.images.addButton),
+                  // ),
                 ],
               ),
             ),

@@ -19,21 +19,14 @@ import 'choose_ingredient_screen.dart';
 class AddStepScreen extends StatefulWidget {
   final Recipe recipe;
   final StepModel? step;
+  final int? index;
 
   const AddStepScreen({
     super.key,
     required this.recipe,
     this.step,
+    this.index,
   });
-
-  static Widget builder(
-    BuildContext context,
-    Recipe recipe,
-  ) {
-    return AddStepScreen(
-      recipe: recipe,
-    );
-  }
 
   @override
   State<AddStepScreen> createState() => _AddStepScreenState();
@@ -72,8 +65,11 @@ class _AddStepScreenState extends State<AddStepScreen>
     _ingredients = await DatabaseService.getAllIngredients();
     if (widget.step != null) {
       _isEdit = true;
-      _nameController.text = widget.recipe.name;
-      _descriptionController.text = widget.recipe.description;
+      _newStep = widget.step!;
+      _nameController.text = widget.step!.name;
+      _descriptionController.text = widget.step!.description;
+      _selectedTime =
+          TimeOfDay(hour: widget.step!.hour, minute: widget.step!.minute);
       setState(() {
         _steps = widget.recipe.steps;
       });
@@ -86,96 +82,114 @@ class _AddStepScreenState extends State<AddStepScreen>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBody: true,
-     body: BackgroundWidget(
-        
+      body: BackgroundWidget(
         child: Column(
           children: [
             SizedBox(height: 50.h),
             _buildHeader(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomTextFormField(
-                        //context,
-                        controller: _nameController,
-                        focusNode: _nameNode,
-                        hintText: 'name',
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      CustomTextFormField(
-                        // context,
-                        controller: _descriptionController,
-                        focusNode: _descriptionNode,
-                        hintText: 'description',
-                        maxLines: 5,
-                        // hint: 'Description',
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomElevatedButton(
-                        leftIcon: CustomImageView(
-                          imagePath: Assets.images.timeFill,
-                          height: 30.h,
-                          color: theme.colorScheme.surface,
+            Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(
+                          height: 20.h,
                         ),
-                        text: (_selectedTime.hour == 0 &&
-                                _selectedTime.minute == 0)
-                            ? 'add time'
-                            : (_selectedTime.hour == 0
-                                    ? ''
-                                    : '${_selectedTime.hour} hour ') +
-                                (_selectedTime.minute == 0
-                                    ? ''
-                                    : ' ${_selectedTime.minute} min'),
-                        buttonTextStyle: theme.textTheme.displaySmall,
-                        onPressed: () {
-                          _pickTime();
-                        },
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      CustomElevatedButton(
-                        leftIcon: CustomImageView(
-                          imagePath: Assets.images.addRound,
-                          height: 30.h,
-                          color: theme.colorScheme.surface,
+                        CustomTextFormField(
+                          //context,
+                          controller: _nameController,
+                          focusNode: _nameNode,
+                          hintText: 'name',
                         ),
-                        text: 'add ingredients',
-                        buttonStyle: CustomButtonStyles.fillPrimaryTL20,
-                        buttonTextStyle: theme.textTheme.displaySmall,
-                        onPressed: () {
-                          _onAddIngredientsTap(context);
-                        },
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _newStep.ingredientsIdList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 10.h),
-                            child: IngredientWidget(
-                                ingredient: _ingredients.firstWhere((x) =>
-                                    x.id == _newStep.ingredientsIdList[index])),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 120.h),
-                    ],
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        CustomTextFormField(
+                          // context,
+                          controller: _descriptionController,
+                          focusNode: _descriptionNode,
+                          hintText: 'description',
+                          maxLines: 5,
+                          // hint: 'Description',
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        CustomElevatedButton(
+                          leftIcon: CustomImageView(
+                            imagePath: Assets.images.timeFill,
+                            height: 30.h,
+                            color: theme.colorScheme.surface,
+                          ),
+                          text: (_selectedTime.hour == 0 &&
+                                  _selectedTime.minute == 0)
+                              ? 'add time'
+                              : (_selectedTime.hour == 0
+                                      ? ''
+                                      : '${_selectedTime.hour} hour ') +
+                                  (_selectedTime.minute == 0
+                                      ? ''
+                                      : ' ${_selectedTime.minute} min'),
+                          buttonTextStyle: theme.textTheme.displaySmall,
+                          onPressed: () {
+                            _pickTime();
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        CustomElevatedButton(
+                          leftIcon: CustomImageView(
+                            imagePath: Assets.images.addRound,
+                            height: 30.h,
+                            color: theme.colorScheme.surface,
+                          ),
+                          text: 'add ingredients',
+                          buttonStyle: CustomButtonStyles.fillPrimaryTL20,
+                          buttonTextStyle: theme.textTheme.displaySmall,
+                          onPressed: () {
+                            _onAddIngredientsTap(context);
+                          },
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _newStep.ingredientsIdList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.only(bottom: 10.h),
+                              child: InkWell(
+                                onTap: () => _onAddIngredientQuantityTap(
+                                    context,
+                                    _ingredients.firstWhere((x) =>
+                                        x.id ==
+                                        _newStep.ingredientsIdList[index])),
+                                child: IngredientWidget(
+                                    ingredient: _ingredients.firstWhere((x) =>
+                                        x.id ==
+                                        _newStep.ingredientsIdList[index])),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: 120.h),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+                if (_isEdit)
+                  Positioned(
+                      right: 0,
+                      child: InkWell(
+                        onTap: () => _onDeleteStepTap(widget.index! - 1),
+                        child: CustomImageView(
+                          imagePath: Assets.images.btnDelete,
+                        ),
+                      ))
+              ],
             ),
           ],
         ),
@@ -226,7 +240,9 @@ class _AddStepScreenState extends State<AddStepScreen>
                   SizedBox(width: 16.h),
                   Expanded(
                     child: Text(
-                      '${widget.recipe.steps.length + 1} Step',
+                      _isEdit
+                          ? '${widget.index} Step'
+                          : '${widget.recipe.steps.length + 1} Step',
                       style: theme.textTheme.displayLarge,
                     ),
                   ),
@@ -253,7 +269,11 @@ class _AddStepScreenState extends State<AddStepScreen>
   void _onDeleteStepTap(int index) {
     setState(() {
       _steps.removeAt(index);
+      DatabaseService.saveRecipe(widget.recipe);
     });
+
+    context.maybePop(index - 1);
+    context.replaceRoute(ChangeRecipeRoute(recipe: widget.recipe));
   }
 
   bool _isFieldsFill() {
@@ -261,17 +281,17 @@ class _AddStepScreenState extends State<AddStepScreen>
         _descriptionController.value.text.isNotEmpty);
   }
 
-  void  _onSaveTap() async {
+  void _onSaveTap() async {
     if (_isFieldsFill()) {
       _newStep = StepModel.empty().copyWith(
-        id: _steps.length.toString(),
-        name: _nameController.value.text,
-        description: _descriptionController.value.text,
-        hour: _selectedTime.hour,
-        minute: _selectedTime.minute,
-        ingredientsIdList: _newStep.ingredientsIdList,
-        photo : ImageHelper.convertFileToBase64(_selectedPhoto)
-      );
+          id: (_isEdit ? widget.step!.id : widget.recipe.steps.length + 1)
+              .toString(),
+          name: _nameController.value.text,
+          description: _descriptionController.value.text,
+          hour: _selectedTime.hour,
+          minute: _selectedTime.minute,
+          ingredientsIdList: _newStep.ingredientsIdList,
+          photo: ImageHelper.convertFileToBase64(_selectedPhoto));
 
       //_steps.add(_newStep);
       // Recipe recipe = Recipe(
@@ -331,6 +351,21 @@ class _AddStepScreenState extends State<AddStepScreen>
       // Use the selectedIconPath
       setState(() {
         _newStep.ingredientsIdList.add(ingredientId);
+        _ingredients = DatabaseService.getAllIngredients();
+      });
+    }
+  }
+
+  void _onAddIngredientQuantityTap(
+      BuildContext context, Ingredient ingredient) async {
+    final ingredientId =
+        await context.pushRoute(ChangeQuantityRoute(ingredient: ingredient));
+
+    if (ingredientId != null) {
+      // Use the selectedIconPath
+      setState(() {
+        //_newStep.ingredientsIdList.add(ingredientId);
+        _ingredients = DatabaseService.getAllIngredients();
       });
     }
   }

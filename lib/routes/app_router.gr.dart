@@ -16,13 +16,9 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     AddIngredientsRoute.name: (routeData) {
-      final args = routeData.argsAs<AddIngredientsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: AddIngredientsScreen(
-          key: args.key,
-          recipe: args.recipe,
-        ),
+        child: const AddIngredientsScreen(),
       );
     },
     AddRecipeRoute.name: (routeData) {
@@ -43,6 +39,7 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           recipe: args.recipe,
           step: args.step,
+          index: args.index,
         ),
       );
     },
@@ -163,40 +160,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [AddIngredientsScreen]
-class AddIngredientsRoute extends PageRouteInfo<AddIngredientsRouteArgs> {
-  AddIngredientsRoute({
-    Key? key,
-    required Recipe recipe,
-    List<PageRouteInfo>? children,
-  }) : super(
+class AddIngredientsRoute extends PageRouteInfo<void> {
+  const AddIngredientsRoute({List<PageRouteInfo>? children})
+      : super(
           AddIngredientsRoute.name,
-          args: AddIngredientsRouteArgs(
-            key: key,
-            recipe: recipe,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'AddIngredientsRoute';
 
-  static const PageInfo<AddIngredientsRouteArgs> page =
-      PageInfo<AddIngredientsRouteArgs>(name);
-}
-
-class AddIngredientsRouteArgs {
-  const AddIngredientsRouteArgs({
-    this.key,
-    required this.recipe,
-  });
-
-  final Key? key;
-
-  final Recipe recipe;
-
-  @override
-  String toString() {
-    return 'AddIngredientsRouteArgs{key: $key, recipe: $recipe}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -244,6 +217,7 @@ class AddStepRoute extends PageRouteInfo<AddStepRouteArgs> {
     Key? key,
     required Recipe recipe,
     StepModel? step,
+    int? index,
     List<PageRouteInfo>? children,
   }) : super(
           AddStepRoute.name,
@@ -251,6 +225,7 @@ class AddStepRoute extends PageRouteInfo<AddStepRouteArgs> {
             key: key,
             recipe: recipe,
             step: step,
+            index: index,
           ),
           initialChildren: children,
         );
@@ -266,6 +241,7 @@ class AddStepRouteArgs {
     this.key,
     required this.recipe,
     this.step,
+    this.index,
   });
 
   final Key? key;
@@ -274,9 +250,11 @@ class AddStepRouteArgs {
 
   final StepModel? step;
 
+  final int? index;
+
   @override
   String toString() {
-    return 'AddStepRouteArgs{key: $key, recipe: $recipe, step: $step}';
+    return 'AddStepRouteArgs{key: $key, recipe: $recipe, step: $step, index: $index}';
   }
 }
 

@@ -94,7 +94,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
         .bottom != 0;
     return Scaffold(
       extendBodyBehindAppBar: true,
-    resizeToAvoidBottomInset: false,
+  //  resizeToAvoidBottomInset: false,
       extendBody: true,
       //  appBar: CustomAppBar(
       //   leadingWidth: 60.h,
@@ -193,7 +193,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                                                     .roundedBorder30,
                                                 child: Image.memory(
                                                   snapshot.data!,
-                                                  fit: BoxFit.fill,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               );
                                             } else {
@@ -261,7 +261,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
                               child: _buildCategoryDropdown(),
                             ),
                             SizedBox(
-                              width: 16,
+                              width: 8.h,
                             ),
                             Flexible(
                               flex: 2,
@@ -358,7 +358,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
   Widget _buildCategoryDropdown() {
     return Container(
       // decoration: AppDecoration.fillPrimary,
-      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.h),
+      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 0.h),
       child: DropdownButtonHideUnderline(
 
         child: DropdownButton2<RecipeCategory>(
@@ -369,7 +369,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen>
           // ),
 
           menuItemStyleData:  MenuItemStyleData(
-            height: 100.h,
+            height: 80.h,
             padding: EdgeInsets.only(left: 14, right: 14),
           ),
           iconStyleData: IconStyleData(iconSize: 0),

@@ -61,7 +61,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
         leading: InkWell(
           // borderRadius: BorderRadiusStyle.circleBorder12,
           onTap: () {
-            NavigatorService.goBack();
+            context.maybePop();
           },
           child: Container(
             padding: EdgeInsets.all(8.h),

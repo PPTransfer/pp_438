@@ -156,6 +156,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                     padding: EdgeInsets.only(bottom: 10.h),
                     child: IngredientWidget(
                       ingredient: _getFilteredIngredients()[index],
+                      showCount: false,
 
                       //onTapComplete: () => _tasksList = DatabaseService.getAllTasks(),
                     ),
@@ -194,5 +195,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
     });
   }
 
-  _onTapAddNew() {}
+  _onTapAddNew() {
+    context.pushRoute(AddIngredientsRoute());
+  }
 }

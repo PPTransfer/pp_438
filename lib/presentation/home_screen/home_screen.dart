@@ -41,6 +41,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _recipesList = DatabaseService.getAllRecipes();
   }
 
+  void toggleFavorite(Recipe recipe) {
+    setState(() {
+      recipe.isFavorite = !recipe.isFavorite;
+      DatabaseService.saveRecipe(
+          recipe.copyWith(isFavorite: !recipe.isFavorite));
+      _recipesList = DatabaseService.getAllRecipes();
+    });
+  }
+
   List<Recipe> _getFilteredRecipes() {
     List<Recipe> filteredRecipes = _recipesList;
 
@@ -82,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       body: BackgroundWidget(
-        
         child: Column(
           children: [
             SizedBox(
@@ -150,9 +158,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: DropdownButton2<String>(
         customButton: Container(
           child: CustomImageView(
-            imagePath:selectedCategory.isNotEmpty? selectedCategory=='F' ?Assets.images.favoriteFill : assetByRecipeCategory(RecipeCategory.values.firstWhere(
-                (x) => x.name == selectedCategory,
-                orElse: () => RecipeCategory.breakfast)) : Assets.images.filter,
+            imagePath: selectedCategory.isNotEmpty
+                ? selectedCategory == 'F'
+                    ? Assets.images.favoriteFill
+                    : assetByRecipeCategory(RecipeCategory.values.firstWhere(
+                        (x) => x.name == selectedCategory,
+                        orElse: () => RecipeCategory.breakfast))
+                : Assets.images.filter,
           ),
         ),
         menuItemStyleData: const MenuItemStyleData(
@@ -192,11 +204,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               child: Row(
                 children: [
-                  Container(  decoration: AppDecoration.fillBlack.copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
+                  Container(
+                    decoration: AppDecoration.fillBlack.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder10),
                     child: CustomImageView(
                       height: 60.h,
                       width: 60.h,
-                      imagePath:Assets.images.filter,
+                      imagePath: Assets.images.filter,
                     ),
                   ),
                   SizedBox(width: 8.h),
@@ -208,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
-
           ...RecipeCategory.values.map((RecipeCategory category) {
             return DropdownMenuItem<String>(
               value: category.name,
@@ -248,7 +261,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Row(
                 children: [
                   Container(
-                    decoration: AppDecoration.fillBlack.copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
+                    decoration: AppDecoration.fillBlack.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder10),
                     child: CustomImageView(
                       height: 60.h,
                       width: 60.h,
@@ -293,7 +307,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     padding: EdgeInsets.only(bottom: 10.h),
                     child: RecipeMainWidget(
                       recipe: _getFilteredRecipes()[index],
-                      onDelete: () => {},
+                      onTap: () => {
+                        setState(() {
+                          toggleFavorite(_getFilteredRecipes()[index]);
+                        }),
+                      },
                       //onTapComplete: () => _tasksList = DatabaseService.getAllTasks(),
                     ),
                   );

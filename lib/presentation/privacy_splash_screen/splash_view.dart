@@ -5,13 +5,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:pp_438/core/app_export.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pp_438/core/services/flag_smith_service.dart';
 
 import '../../core/services/database/database_keys.dart';
 import '../../core/services/database/database_service.dart';
-
-
-
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -28,27 +25,25 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   //final _remoteConfigService = GetIt.instance<RemoteConfigService>();
   final _databaseService = GetIt.instance<DatabaseService>();
+  final _flagSmithService = GetIt.instance<FlagSmithService>();
 
-  bool usePrivacy = true  ;
+  bool usePrivacy = true;
 
   @override
   void initState() {
-
-
+    _init();
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _init();
-    });
   }
 
   Future<void> _init() async {
-    // usePrivacy = _remoteConfigService.getBool(ConfigKey.usePrivacy);
+    usePrivacy = _flagSmithService.usePrivacy;
 
     _navigate();
   }
 
   void _navigate() {
-    final seenRateDialog = _databaseService.get(DatabaseKeys.seenRateDialog) ?? false;
+    final seenRateDialog =
+        _databaseService.get(DatabaseKeys.seenRateDialog) ?? false;
     if (!seenRateDialog) {
       InAppReview.instance.requestReview();
       _databaseService.put(DatabaseKeys.seenRateDialog, true);
@@ -61,14 +56,15 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!seenOnboarding) {
         context.pushRoute(OnboardingRoute());
       } else {
-       context.pushRoute(MainRoute())  ;
+        context.pushRoute(MainRoute());
       }
     } else {
-      context.pushRoute(PrivacyRoute())  ;
+      context.pushRoute(PrivacyRoute());
     }
 
     FlutterNativeSplash.remove();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold();

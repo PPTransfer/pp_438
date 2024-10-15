@@ -54,8 +54,7 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
       extendBody: true,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-     body: BackgroundWidget(
-        
+      body: BackgroundWidget(
         child: Column(
           children: [
             SizedBox(height: 50.h),
@@ -77,7 +76,7 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
               decoration: AppDecoration.fillGray,
               child: Row(
                 children: [
-                   InkWell(
+                  InkWell(
                     onTap: () => context.maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
@@ -103,9 +102,9 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // CustomTabBar(
-            //     tabs: ['Choose from', 'Create new'],
-            //     controller: _tabController),
+            CustomTabBar(
+                tabs: ['Choose from', 'Create new'],
+                controller: _tabController),
             SizedBox(height: 16.h),
             Expanded(
               child: TabBarView(
@@ -136,8 +135,7 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
                 return Padding(
                   padding: EdgeInsets.only(bottom: 8.h),
                   child: InkWell(
-                    onTap: () =>
-                        context.maybePop(_ingredients[index].id),
+                    onTap: () => context.maybePop(_ingredients[index].id),
                     child: IngredientWidget(
                       ingredient: _ingredients[index],
                     ),
@@ -199,6 +197,9 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
               controller: _nameController,
               focusNode: _nameNode,
               hintText: 'name',
+              onChanged: (vale) {
+                setState(() {});
+              },
             ),
             SizedBox(
               height: 16.h,
@@ -209,6 +210,9 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
               focusNode: _descriptionNode,
               hintText: 'description',
               maxLines: 5,
+              onChanged: (vale) {
+                setState(() {});
+              },
               // hint: 'Description',
             ),
           ],

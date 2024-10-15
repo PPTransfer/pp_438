@@ -4,11 +4,11 @@ workflows:
     instance_type: mac_mini_m1
     max_build_duration: 45
     integrations:
-      app_store_connect: test
+      app_store_connect: APP438Key
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.example.pp_423
+        bundle_identifier: com.akjslsl.APP438
       flutter: stable
       xcode: latest
       cocoapods: default

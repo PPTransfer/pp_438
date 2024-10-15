@@ -40,7 +40,7 @@ class RecipeWidget extends StatelessWidget {
                                 borderRadius: BorderRadiusStyle.roundedBorder30,
                                 child: Image.memory(
                                   snapshot.data!,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 ),
                               );
                             } else {

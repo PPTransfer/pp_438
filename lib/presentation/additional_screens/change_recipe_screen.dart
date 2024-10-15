@@ -80,8 +80,7 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
       extendBodyBehindAppBar: true,
       extendBody: true,
       resizeToAvoidBottomInset: false,
-     body: BackgroundWidget(
-        
+      body: BackgroundWidget(
         child: Column(
           children: [
             SizedBox(height: 50.h),
@@ -118,7 +117,7 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
               decoration: AppDecoration.fillGray,
               child: Row(
                 children: [
-                   InkWell(
+                  InkWell(
                     onTap: () => context.maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
@@ -251,6 +250,8 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
       padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 8.h),
       child: Text(
         widget.recipe.name,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: CustomTextStyles.bodyLargeOnPrimary,
       ),
     );
@@ -262,6 +263,8 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
       padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 8.h),
       child: Text(
         widget.recipe.description,
+        maxLines: 5,
+        overflow: TextOverflow.ellipsis,
         style: CustomTextStyles.bodyLargeOnPrimary,
       ),
     );
@@ -339,8 +342,29 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.only(bottom: 8.h),
-                child: StepWidget(
-                  step: _steps[index],
+                child: InkWell(
+                  onTap: () async {
+                    final step = await context.pushRoute(
+                      AddStepRoute(
+                        recipe: widget.recipe,
+                        step: _steps[index],
+                        index: index + 1,
+                      ),
+                    );
+
+                    if (step != null) {
+                      setState(() {
+                        widget.recipe.steps[index] = step as StepModel;
+                        _steps = widget.recipe.steps;
+                        _allIngredients = DatabaseService.getAllIngredients();
+                        getAllIngredients();
+                      });
+                    }
+                  },
+                  child: StepWidget(
+                    step: _steps[index],
+                    index: index + 1,
+                  ),
                 ),
               );
             },
@@ -380,6 +404,8 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
       setState(() {
         widget.recipe.steps.add(step as StepModel);
         _steps = widget.recipe.steps;
+        _allIngredients = DatabaseService.getAllIngredients();
+        getAllIngredients();
       });
     }
   }
