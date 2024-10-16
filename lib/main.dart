@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
                         .copyWith(alwaysUse24HourFormat: true),
                     child: child ?? Container()),
                 theme: theme,
-                title: 'Name',//TODO: Name
+                title: 'Kitchen Creators',//TODO: Name
 
                 debugShowCheckedModeBanner: false,
 
