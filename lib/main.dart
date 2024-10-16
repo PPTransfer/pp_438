@@ -24,7 +24,6 @@ Future<void> main() async {
   Future.wait([
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
   ]).then((value) {
-
     runApp(MyApp());
   });
 }
@@ -68,10 +67,8 @@ class MyApp extends StatelessWidget {
                         .copyWith(alwaysUse24HourFormat: true),
                     child: child ?? Container()),
                 theme: theme,
-                title: 'Kitchen Creators',//TODO: Name
-
+                title: 'Kitchen Creators',
                 debugShowCheckedModeBanner: false,
-
                 routerConfig: _appRouter.config(),
               );
             },
