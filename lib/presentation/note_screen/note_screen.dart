@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/app_export.dart';
+
 @RoutePage()
 class NoteScreen extends StatefulWidget {
   final String note;
@@ -18,8 +19,7 @@ class _NoteScreenState extends State<NoteScreen> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       resizeToAvoidBottomInset: false,
-     body: BackgroundWidget(
-        
+      body: BackgroundWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -54,7 +54,7 @@ class _NoteScreenState extends State<NoteScreen> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () => context.maybePop(),
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),

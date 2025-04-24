@@ -20,6 +20,7 @@ class AgreementScreenArguments {
     this.usePrivacyAgreement = false,
   });
 }
+
 @RoutePage()
 class AgreementScreen extends StatefulWidget {
   final AgreementScreenArguments arguments;
@@ -61,7 +62,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
         leading: InkWell(
           // borderRadius: BorderRadiusStyle.circleBorder12,
           onTap: () {
-            context.maybePop();
+            Navigator.of(context).maybePop();
           },
           child: Container(
             padding: EdgeInsets.all(8.h),
@@ -145,10 +146,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
                                 .copyWith(
                                   color: Colors.white,
                                 ),
-                            p: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(
+                            p: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                   color: Colors.white,
                                 ),
                           ),

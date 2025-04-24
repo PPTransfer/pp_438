@@ -56,7 +56,6 @@ class _ViewRecipeScreenState extends State<ViewRecipeScreen>
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       body: BackgroundWidget(
-
         child: Column(
           children: [
             SizedBox(
@@ -83,7 +82,7 @@ class _ViewRecipeScreenState extends State<ViewRecipeScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: () => context.maybePop(),
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),
@@ -387,7 +386,7 @@ class _ViewRecipeScreenState extends State<ViewRecipeScreen>
                 padding: EdgeInsets.only(bottom: 8.h),
                 child: StepWidget(
                   step: widget.recipe.steps[index],
-                  index: index+1,
+                  index: index + 1,
                 ),
               );
             },

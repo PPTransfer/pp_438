@@ -20,17 +20,16 @@ import '../../gen/assets.gen.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../view_screens/widgets/ingredient_widget.dart';
 
-
 @RoutePage()
 class AddIngredientsScreen extends StatefulWidget {
-
   const AddIngredientsScreen({
     super.key,
   });
 
-  static Widget builder(BuildContext context,) {
-    return AddIngredientsScreen(
-    );
+  static Widget builder(
+    BuildContext context,
+  ) {
+    return AddIngredientsScreen();
   }
 
   @override
@@ -60,9 +59,7 @@ class _AddIngredientsScreenState extends State<AddIngredientsScreen>
     _initializeData();
   }
 
-  Future<void> _initializeData() async {
-
-  }
+  Future<void> _initializeData() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +77,7 @@ class _AddIngredientsScreenState extends State<AddIngredientsScreen>
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:    ValueListenableBuilder<bool>(
+      floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: ValueNotifier(_isFieldsFill()),
         builder: (BuildContext context, bool value, Widget? child) {
           return Padding(
@@ -114,13 +111,13 @@ class _AddIngredientsScreenState extends State<AddIngredientsScreen>
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () => context.maybePop(),
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),
                   Expanded(
                     child:
-                    Text('Ingredient', style: theme.textTheme.displayLarge),
+                        Text('Ingredient', style: theme.textTheme.displayLarge),
                   ),
                   SizedBox(width: 16.h),
                 ],
@@ -139,16 +136,12 @@ class _AddIngredientsScreenState extends State<AddIngredientsScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-
-
             _buildCreateNewTab(),
           ],
-
         ),
       ),
     );
   }
-
 
   Widget _buildCreateNewTab() {
     return Column(
@@ -204,7 +197,6 @@ class _AddIngredientsScreenState extends State<AddIngredientsScreen>
             ),
           ],
         ),
-
       ],
     );
   }

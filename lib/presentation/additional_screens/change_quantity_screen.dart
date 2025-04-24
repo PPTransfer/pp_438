@@ -39,9 +39,7 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
     _amountAddController.text = widget.ingredient.amountAdd.toString();
     _selectedUnit = widget.ingredient.unit;
     super.initState();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -51,8 +49,7 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       resizeToAvoidBottomInset: false,
-     body: BackgroundWidget(
-        
+      body: BackgroundWidget(
         child: Column(
           children: [
             SizedBox(height: 50.h),
@@ -98,8 +95,8 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
               decoration: AppDecoration.fillGray,
               child: Row(
                 children: [
-                   InkWell(
-                    onTap: () => context.maybePop(),
+                  InkWell(
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),
@@ -326,7 +323,7 @@ class _ChangeQuantityScreenState extends State<ChangeQuantityScreen> {
       amountAdd: int.parse(_amountAddController.value.text),
     );
 
-    await  DatabaseService.saveIngredient(ingredient);
-    context.maybePop(ingredient.id);
+    await DatabaseService.saveIngredient(ingredient);
+    Navigator.of(context).maybePop(ingredient.id);
   }
 }

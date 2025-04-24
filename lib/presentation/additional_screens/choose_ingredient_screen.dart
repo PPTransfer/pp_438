@@ -77,7 +77,7 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () => context.maybePop(),
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),
@@ -135,7 +135,8 @@ class _ChooseIngredientScreenState extends State<ChooseIngredientScreen>
                 return Padding(
                   padding: EdgeInsets.only(bottom: 8.h),
                   child: InkWell(
-                    onTap: () => context.maybePop(_ingredients[index].id),
+                    onTap: () =>
+                        Navigator.of(context).maybePop(_ingredients[index].id),
                     child: IngredientWidget(
                       ingredient: _ingredients[index],
                     ),

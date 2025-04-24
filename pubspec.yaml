@@ -72,7 +72,7 @@ dependencies:
   animated_segmented_tab_control: ^2.0.0
   image_picker: ^1.1.2
   flutter_pannable_rating_bar: ^2.7.2+1
-  auto_route: ^9.3.0+1
+  auto_route: 7.8.4
   flutter_rating_bar: ^4.0.1
   dropdown_button2: ^2.3.9
   flutter_custom_tab_bar: ^1.2.1
@@ -82,7 +82,7 @@ dependencies:
   flagsmith: ^6.0.1
 
 dev_dependencies:
-  auto_route_generator: ^9.0.0
+  auto_route_generator: 7.0.0
   hive_generator: ^2.0.1
   build_runner: ^2.1.7 
   flutter_test:

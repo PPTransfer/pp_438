@@ -232,7 +232,7 @@ class _AddStepScreenState extends State<AddStepScreen>
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () => context.maybePop(),
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(
                       imagePath: Assets.images.btnBack,
                     ),
@@ -272,7 +272,7 @@ class _AddStepScreenState extends State<AddStepScreen>
       DatabaseService.saveRecipe(widget.recipe);
     });
 
-    context.maybePop(index - 1);
+    Navigator.of(context).maybePop(index - 1);
     context.replaceRoute(ChangeRecipeRoute(recipe: widget.recipe));
   }
 
@@ -306,7 +306,7 @@ class _AddStepScreenState extends State<AddStepScreen>
       // );
       //
       // await DatabaseService.saveRecipe(recipe);
-      context.maybePop(_newStep);
+      Navigator.of(context).maybePop(_newStep);
     }
   }
 

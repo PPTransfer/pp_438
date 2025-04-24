@@ -52,7 +52,6 @@ class _CookingScreenState extends State<CookingScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundWidget(
-        
         child: PageView.builder(
           itemCount: widget.recipe.steps.length,
           controller: pageController,
@@ -123,12 +122,11 @@ class _CookingScreenState extends State<CookingScreen>
                   Expanded(
                     child: Text('${widget.recipe.name}',
                         maxLines: 1,
-
                         style: CustomTextStyles.displayMediumOnPrimary_1),
                   ),
                   SizedBox(width: 16.h),
                   InkWell(
-                    onTap: ()=> context.pushRoute(MainRoute()),
+                    onTap: () => context.pushRoute(MainRoute()),
                     child: CustomImageView(imagePath: Assets.images.homeButton),
                   )
                 ],
@@ -190,7 +188,8 @@ class _CookingScreenState extends State<CookingScreen>
                                             );
                                           } else {
                                             return Center(
-                                              child: CircularProgressIndicator(),
+                                              child:
+                                                  CircularProgressIndicator(),
                                             );
                                           }
                                         },
@@ -368,8 +367,9 @@ class _CookingScreenState extends State<CookingScreen>
                     return Padding(
                       padding: EdgeInsets.only(bottom: 8.h),
                       child: InkWell(
-                        onTap: () => context.maybePop(_allIngredient.firstWhere(
-                            (x) => x.id == step.ingredientsIdList[index])),
+                        onTap: () => Navigator.of(context).maybePop(
+                            _allIngredient.firstWhere(
+                                (x) => x.id == step.ingredientsIdList[index])),
                         child: IngredientWidget(
                           ingredient: _allIngredient.firstWhere(
                               (x) => x.id == step.ingredientsIdList[index]),

@@ -22,7 +22,7 @@ class _ChooseIconScreenState extends State<ChooseIconScreen> {
 
   void _selectIcon(int index) {
     IconModel selectedIcon = iconsBox[index]!;
-    context.maybePop(selectedIcon.path);
+    Navigator.of(context).maybePop();
     //Navigator.pop(context, selectedIcon.path); // Return to the previous screen with the selected icon path
   }
 
@@ -32,8 +32,7 @@ class _ChooseIconScreenState extends State<ChooseIconScreen> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-     body: BackgroundWidget(
-        
+      body: BackgroundWidget(
         child: Column(
           children: [
             SizedBox(height: 50.h),
@@ -88,8 +87,8 @@ class _ChooseIconScreenState extends State<ChooseIconScreen> {
               decoration: AppDecoration.fillGray,
               child: Row(
                 children: [
-                   InkWell(
-                    onTap: () => context.maybePop(),
+                  InkWell(
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),

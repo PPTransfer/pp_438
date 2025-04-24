@@ -118,7 +118,7 @@ class _ChangeRecipeScreenState extends State<ChangeRecipeScreen>
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () => context.maybePop(),
+                    onTap: () => Navigator.of(context).maybePop(),
                     child: CustomImageView(imagePath: Assets.images.btnBack),
                   ),
                   SizedBox(width: 16.h),
