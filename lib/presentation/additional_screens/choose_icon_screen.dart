@@ -22,7 +22,7 @@ class _ChooseIconScreenState extends State<ChooseIconScreen> {
 
   void _selectIcon(int index) {
     IconModel selectedIcon = iconsBox[index]!;
-    Navigator.of(context).maybePop();
+    Navigator.of(context).maybePop(selectedIcon.path);
     //Navigator.pop(context, selectedIcon.path); // Return to the previous screen with the selected icon path
   }
 
